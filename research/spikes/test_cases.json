@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "text": "Slept maybe four hours. Dragged myself through the day, my back is killing me and I've had a headache since noon.",
+    "expected_dims": ["physical"],
+    "primary": "physical"
+  },
+  {
+    "id": 2,
+    "text": "Could not focus at all today. Read the same paragraph five times and still had no idea what it said. Brain feels like soup.",
+    "expected_dims": ["mental"],
+    "primary": "mental"
+  },
+  {
+    "id": 3,
+    "text": "Snapped at my flatmate over nothing. I've been on the edge of tears all evening and I don't even know why.",
+    "expected_dims": ["emotional"],
+    "primary": "emotional"
+  },
+  {
+    "id": 4,
+    "text": "Three people invited me out and I made excuses to all of them. I just want everyone to leave me alone.",
+    "expected_dims": ["social"],
+    "primary": "social"
+  },
+  {
+    "id": 5,
+    "text": "Another day of pointless meetings. I genuinely don't care about the product anymore, I'm just going through the motions.",
+    "expected_dims": ["professional"],
+    "primary": "professional"
+  },
+  {
+    "id": 6,
+    "text": "Haven't touched my guitar in two months. Every hour goes to work or chores and none of it is actually mine.",
+    "expected_dims": ["personal"],
+    "primary": "personal"
+  },
+  {
+    "id": 7,
+    "text": "Good day honestly. Slept well, got through my task list, had lunch with a friend.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 8,
+    "text": "Exhausted after work and then had zero patience with my sister on the phone. Went to bed angry.",
+    "expected_dims": ["physical", "emotional", "social"],
+    "primary": "emotional"
+  },
+  {
+    "id": 9,
+    "text": "Worked till 11pm again. My eyes hurt and I couldn't think straight by the end but the deadline is Friday.",
+    "expected_dims": ["professional", "physical", "mental"],
+    "primary": "professional"
+  },
+  {
+    "id": 10,
+    "text": "Sunday evening and I already feel sick about tomorrow. Dreading the standup.",
+    "expected_dims": ["professional", "emotional"],
+    "primary": "professional"
+  },
+  {
+    "id": 11,
+    "text": "Rested today. Long walk, cooked properly, feel like a human again.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 12,
+    "text": "Forgot two deadlines this week. I used to be sharp and now I feel useless at my job.",
+    "expected_dims": ["mental", "professional"],
+    "primary": "professional"
+  },
+  {
+    "id": 13,
+    "text": "I don't feel anything much anymore. Not sad, not happy. Just flat.",
+    "expected_dims": ["emotional"],
+    "primary": "emotional"
+  },
+  {
+    "id": 14,
+    "text": "Been getting sick constantly. Third cold this quarter and I'm always tired no matter how much I sleep.",
+    "expected_dims": ["physical"],
+    "primary": "physical"
+  },
+  {
+    "id": 15,
+    "text": "Cancelled my gym class, cancelled dinner with Priya, cancelled everything. Slept instead.",
+    "expected_dims": ["social", "physical", "personal"],
+    "primary": "social"
+  },
+  {
+    "id": 16,
+    "text": "My manager praised the report today and I felt nothing at all. It used to matter to me.",
+    "expected_dims": ["professional", "emotional"],
+    "primary": "professional"
+  },
+  {
+    "id": 17,
+    "text": "Spent all evening on the balcony reading. First time in weeks I felt like myself.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 18,
+    "text": "Cannot switch off. Lying in bed at 2am replaying the meeting in my head.",
+    "expected_dims": ["mental", "professional", "physical"],
+    "primary": "mental"
+  },
+  {
+    "id": 19,
+    "text": "Everyone at the office is annoying me. I keep imagining just not showing up.",
+    "expected_dims": ["professional", "social", "emotional"],
+    "primary": "professional"
+  },
+  {
+    "id": 20,
+    "text": "Skipped lunch again, ran on coffee, hands were shaking by 4pm.",
+    "expected_dims": ["physical"],
+    "primary": "physical"
+  },
+  {
+    "id": 21,
+    "text": "Had a really warm call with my parents. Laughed a lot. Work is still heavy but that helped.",
+    "expected_dims": ["professional"],
+    "primary": "professional"
+  },
+  {
+    "id": 22,
+    "text": "I feel guilty every time I rest. Like I should be doing something productive.",
+    "expected_dims": ["personal", "emotional"],
+    "primary": "personal"
+  },
+  {
+    "id": 23,
+    "text": "Decision fatigue is real. By evening I couldn't even choose what to eat.",
+    "expected_dims": ["mental"],
+    "primary": "mental"
+  },
+  {
+    "id": 24,
+    "text": "Nothing I do at work seems to matter. The same problems come back every quarter.",
+    "expected_dims": ["professional"],
+    "primary": "professional"
+  },
+  {
+    "id": 25,
+    "text": "Went to the party but stood in the corner the whole time wishing I was home.",
+    "expected_dims": ["social"],
+    "primary": "social"
+  },
+  {
+    "id": 26,
+    "text": "Normal Tuesday. Nothing special, nothing terrible.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 27,
+    "text": "Woke up already tired. That's the part that scares me, I haven't felt rested in months.",
+    "expected_dims": ["physical"],
+    "primary": "physical"
+  },
+  {
+    "id": 28,
+    "text": "Cried in the office bathroom over a code review comment. That's not like me.",
+    "expected_dims": ["emotional", "professional"],
+    "primary": "emotional"
+  },
+  {
+    "id": 29,
+    "text": "My friends have stopped inviting me because I always say no. Can't blame them.",
+    "expected_dims": ["social"],
+    "primary": "social"
+  },
+  {
+    "id": 30,
+    "text": "I can't remember the last time I did something purely because I wanted to.",
+    "expected_dims": ["personal"],
+    "primary": "personal"
+  },
+  {
+    "id": 31,
+    "text": "Back-to-back calls from 9 to 7, no break, ate at my desk, then answered emails till midnight.",
+    "expected_dims": ["professional", "physical"],
+    "primary": "professional"
+  },
+  {
+    "id": 32,
+    "text": "Started a new painting today, lost track of time completely. Good day.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 33,
+    "text": "Zoned out through the entire client presentation. Someone asked me a question and I had nothing.",
+    "expected_dims": ["mental", "professional"],
+    "primary": "mental"
+  },
+  {
+    "id": 34,
+    "text": "Feeling low and irritable, and my chest has felt tight all day.",
+    "expected_dims": ["emotional", "physical"],
+    "primary": "emotional"
+  },
+  {
+    "id": 35,
+    "text": "I have no time for anything outside work and I'm starting to resent it deeply.",
+    "expected_dims": ["personal", "professional", "emotional"],
+    "primary": "personal"
+  },
+  {
+    "id": 36,
+    "text": "Took a proper lunch break and went for a walk. Small thing but it helped.",
+    "expected_dims": [],
+    "primary": "none"
+  },
+  {
+    "id": 37,
+    "text": "Told my team I'd handle it even though I'm drowning. I always do this.",
+    "expected_dims": ["professional", "emotional"],
+    "primary": "professional"
+  },
+  {
+    "id": 38,
+    "text": "Lonely. Ate dinner alone again and scrolled my phone for three hours.",
+    "expected_dims": ["social"],
+    "primary": "social"
+  },
+  {
+    "id": 39,
+    "text": "Muscles ache from nothing, appetite is gone, and I keep yawning through the day.",
+    "expected_dims": ["physical"],
+    "primary": "physical"
+  },
+  {
+    "id": 40,
+    "text": "Everything feels like too much effort. Work, people, even watching a film.",
+    "expected_dims": ["emotional", "professional", "social", "personal"],
+    "primary": "emotional"
+  }
+]

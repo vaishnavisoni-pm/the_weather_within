@@ -1,0 +1,301 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "changes_from_v1": "Fixes the 'too tired to hang out' problem. In v1, physical exhaustion could inflate the social, personal and mental scores because several items measured BEHAVIOUR (what you did) rather than STATE (how you actually were). One tired evening therefore scored across three dimensions and the overall score double-counted a single cause.",
+
+    "THE_CORE_PRINCIPLE": {
+      "rule": "Every daily item must measure a STATE, not a BEHAVIOUR.",
+      "why": "A behaviour has many possible causes. 'I cancelled plans' could mean social burnout, or it could mean you were simply knackered. A state is specific: 'being around people felt draining' cannot be explained away by tiredness alone.",
+      "the_test": "Ask of every item: COULD PHYSICAL EXHAUSTION ALONE PRODUCE A HIGH SCORE HERE? If yes, the item is contaminated and must not drive a dimension score.",
+      "what_changed": "Contaminated items were either rewritten into state form, or demoted (daily_eligible=false) so they can still appear in the anchor for context but never drive the daily score."
+    },
+
+    "CASCADE_MODEL": {
+      "insight": "The six dimensions are NOT independent. They cascade. Physical exhaustion drives social withdrawal. Professional exhaustion drives personal erosion. Emotional depletion drives everything. Burnout research treats exhaustion as the core driver and much of the rest as downstream.",
+      "consequence_for_scoring": "The overall score must not count one cause several times. Where the free-text extraction identifies a dimension as a CONSEQUENCE of another, the scoring engine down-weights it (suggested: 0.5x) rather than counting it at full strength.",
+      "consequence_for_insights": "This is where the product gets genuinely smart. Do not say 'your social load is 68'. Say: 'You're withdrawing from people, but it looks driven by exhaustion — the lever is sleep, not socialising.' Naming the DRIVER is more useful than naming the symptom.",
+      "note": "Correlation between dimensions is expected and real — do not try to engineer it away. The goal is only to avoid double-counting a single event, and to point the user at the cause rather than the symptom."
+    },
+
+    "scale": {
+      "type": "5-point, 0-4",
+      "labels": ["Not at all", "A little", "Somewhat", "Quite a bit", "Completely"],
+      "daily_framing": "TODAY",
+      "anchor_framing": "OVER THE LAST TWO WEEKS"
+    },
+
+    "reverse_scoring": "Items with reverse=true are positively worded. Score as (4 - answer). They break response sets: someone tapping 4 down the whole list produces an incoherent profile, which you can detect and flag as low-confidence data.",
+
+    "fields": {
+      "daily_eligible": "true = may be used in the daily 6-tap rotation. false = anchor-only, because the item measures behaviour or is otherwise contaminated by other dimensions.",
+      "anchor": "true = included in the onboarding / monthly deep assessment.",
+      "reverse": "true = positively worded, must be reverse-scored.",
+      "contamination_note": "Present where an item was changed or demoted, explaining what was wrong with it."
+    },
+
+    "rotation": "3 facets per dimension = a 3-day cycle, sampling only daily_eligible items. Items within a facet rotate across cycles. Adaptive override permitted (sample a worsening facet more often) but capped at 2x normal frequency so the other facets never go blind.",
+
+    "SAFETY_NOTE": "Not a clinical instrument. Burnout is not a formal diagnosis in most clinical systems and overlaps heavily with depression. Use non-diagnostic language throughout, and surface support resources when scores stay high. Deliberately contains NO items about self-harm or suicidality: asking that question creates a duty of care an unsupervised app cannot discharge."
+  },
+
+  "dimensions": [
+    {
+      "key": "physical",
+      "label": "Physical",
+      "definition": "Depletion of the body: energy, recovery, bodily symptoms.",
+      "cascade_role": "PRIMARY DRIVER. Physical exhaustion is upstream of most other dimensions. When it is high and others follow, treat this as the cause.",
+      "facets": [
+        {
+          "key": "fatigue",
+          "label": "Energy depletion",
+          "items": [
+            {"id": "PH-F1", "text": "I felt physically drained.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PH-F2", "text": "I had the energy I needed to get through the day.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PH-F3", "text": "Even small physical tasks felt like too much effort.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PH-F4", "text": "I ran out of steam long before the day was over.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "recovery",
+          "label": "Sleep and recovery",
+          "items": [
+            {"id": "PH-R1", "text": "I woke up still tired.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PH-R2", "text": "My sleep left me feeling restored.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PH-R3", "text": "I struggled to fall asleep or stay asleep.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PH-R4", "text": "Rest did not seem to help me recover.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "somatic",
+          "label": "Bodily symptoms",
+          "items": [
+            {"id": "PH-S1", "text": "I had physical symptoms like headaches, tension, or stomach trouble.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PH-S2", "text": "My body felt tense or achy for no clear reason.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PH-S3", "text": "My appetite was off — eating too much, too little, or not caring.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PH-S4", "text": "I felt physically well.", "reverse": true, "anchor": false, "daily_eligible": true}
+          ]
+        }
+      ]
+    },
+
+    {
+      "key": "mental",
+      "label": "Mental",
+      "definition": "Cognitive impairment under load: attention, memory, decision-making, inability to disengage.",
+      "cascade_role": "OFTEN DOWNSTREAM of physical exhaustion. Tired brains fog. To separate genuine cognitive burnout from mere tiredness, items must reference thinking specifically, never effort or energy.",
+      "facets": [
+        {
+          "key": "attention",
+          "label": "Focus and clarity",
+          "items": [
+            {"id": "MN-A1", "text": "I struggled to concentrate.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "MN-A2", "text": "My thinking felt clear and sharp.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "MN-A3", "text": "My mind kept wandering away from what I was doing.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "MN-A4", "text": "I had to re-read or re-do things because I wasn't taking them in.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "load",
+          "label": "Memory and decision fatigue",
+          "items": [
+            {"id": "MN-L1", "text": "I forgot things I would normally remember.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "MN-L2", "text": "Making even small decisions felt exhausting.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "MN-L3", "text": "I felt mentally overloaded, like there was no room left.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "MN-L4", "text": "I made careless mistakes.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "detachment",
+          "label": "Switching off",
+          "items": [
+            {"id": "MN-D1", "text": "I couldn't stop thinking about things I needed to do.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "MN-D2", "text": "I was able to switch off and be present.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "MN-D3", "text": "My mind kept replaying conversations or problems.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "MN-D4", "text": "Even when resting, my head was still working.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        }
+      ]
+    },
+
+    {
+      "key": "emotional",
+      "label": "Emotional",
+      "definition": "Emotional exhaustion, reactivity, blunting. The classic core of burnout.",
+      "cascade_role": "CORE. Often both driver and consequence. Emotional exhaustion is the single strongest signal in the burnout literature — weight it highly in the overall score.",
+      "facets": [
+        {
+          "key": "depletion",
+          "label": "Emotional exhaustion",
+          "items": [
+            {"id": "EM-D1", "text": "I felt emotionally drained.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-D2", "text": "I had nothing left to give anyone.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-D3", "text": "I felt emotionally steady and resourced.", "reverse": true, "anchor": false, "daily_eligible": true},
+            {"id": "EM-D4", "text": "Everything felt like too much effort.", "reverse": false, "anchor": false, "daily_eligible": false,
+             "contamination_note": "DEMOTED. 'Everything felt like too much effort' is indistinguishable from plain physical exhaustion. Anchor-only."},
+            {"id": "EM-D5", "text": "Even small emotional demands felt like too much to handle today.", "reverse": false, "anchor": false, "daily_eligible": true,
+             "note": "ADDED to restore this facet to 4 daily-eligible items after EM-D4 was demoted. Ties the load specifically to EMOTIONAL capacity (handling demands), not general tiredness, so it passes the state-not-behaviour test."}
+          ]
+        },
+        {
+          "key": "reactivity",
+          "label": "Irritability and low mood",
+          "items": [
+            {"id": "EM-R1", "text": "I was irritable or short-tempered.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-R2", "text": "Small things upset me more than they should have.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-R3", "text": "I felt low or heavy for much of the day.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "EM-R4", "text": "I felt close to tears, or actually cried.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "blunting",
+          "label": "Numbness and flatness",
+          "items": [
+            {"id": "EM-B1", "text": "I felt flat or numb, not really feeling much at all.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-B2", "text": "Things that normally move me left me cold.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "EM-B3", "text": "I felt genuinely glad about something today.", "reverse": true, "anchor": false, "daily_eligible": true},
+            {"id": "EM-B4", "text": "I felt distant from my own feelings.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        }
+      ]
+    },
+
+    {
+      "key": "social",
+      "label": "Social",
+      "definition": "The state of one's connection to others — NOT the amount of socialising done.",
+      "cascade_role": "FREQUENTLY DOWNSTREAM. This is the dimension most corrupted by physical exhaustion. Every daily item here must be answerable independently of how tired the person was. This is where v1 broke.",
+      "facets": [
+        {
+          "key": "strain",
+          "label": "Social effort and dread",
+          "note": "Promoted to the lead facet. These are the purest social-state items — tiredness alone does not make people DREAD company or find it draining rather than restoring.",
+          "items": [
+            {"id": "SO-S1", "text": "Being around people felt draining rather than restoring.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "SO-S2", "text": "I dreaded having to interact with people.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "SO-S3", "text": "I had to force myself to seem normal around others.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "SO-S4", "text": "I enjoyed someone's company today.", "reverse": true, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "connection",
+          "label": "Loneliness and support",
+          "items": [
+            {"id": "SO-C1", "text": "I felt lonely, even around other people.", "reverse": false, "anchor": true, "daily_eligible": true,
+             "note": "The 'even around other people' clause is doing real work — it isolates felt disconnection from mere absence of company."},
+            {"id": "SO-C2", "text": "I felt supported by the people around me.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "SO-C3", "text": "I felt disconnected from people who matter to me.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "SO-C4", "text": "There was someone I could have talked to honestly.", "reverse": true, "anchor": false, "daily_eligible": true,
+             "note": "Note 'could have', not 'did'. Measures perceived availability of support, not behaviour."}
+          ]
+        },
+        {
+          "key": "withdrawal",
+          "label": "Pulling away",
+          "note": "REWRITTEN. v1 asked what people DID (cancelled plans, ignored messages) — all of which a tired person does for non-social reasons. v2 asks about the WANTING: the pull away from people, which is the actual burnout signal.",
+          "items": [
+            {"id": "SO-W1", "text": "I wanted to be left alone, even by people I care about.", "reverse": false, "anchor": true, "daily_eligible": true,
+             "contamination_note": "REWRITTEN from 'I avoided contact with people I would normally see' — a behaviour that exhaustion alone explains."},
+            {"id": "SO-W2", "text": "The thought of replying to messages felt like a burden.", "reverse": false, "anchor": true, "daily_eligible": true,
+             "contamination_note": "REWRITTEN from 'I let messages go unanswered' — a behaviour with many causes. The FEELING of burden is the signal."},
+            {"id": "SO-W3", "text": "I felt like withdrawing from everyone.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "SO-W4", "text": "I cancelled or backed out of plans.", "reverse": false, "anchor": true, "daily_eligible": false,
+             "contamination_note": "DEMOTED — this is THE 'too tired to hang out' item. Pure behaviour, caused as often by exhaustion as by social burnout. Kept in the anchor as context only; must NEVER drive the daily social score."},
+            {"id": "SO-W5", "text": "I looked forward to catching up with people today.", "reverse": true, "anchor": false, "daily_eligible": true,
+             "note": "ADDED to restore this facet to 4 daily-eligible items after SO-W4 was demoted. Also fixes a real gap: the withdrawal facet previously had ZERO reverse-scored items, so a straight-liner could not be caught within this facet specifically."}
+          ]
+        }
+      ]
+    },
+
+    {
+      "key": "professional",
+      "label": "Professional",
+      "definition": "Work-specific burnout: exhaustion, mental distance/cynicism, reduced efficacy.",
+      "cascade_role": "MAJOR DRIVER, especially of personal erosion. When professional and personal both rise, professional is usually upstream.",
+      "facets": [
+        {
+          "key": "work_exhaustion",
+          "label": "Work exhaustion",
+          "items": [
+            {"id": "PR-E1", "text": "Work left me completely used up.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PR-E2", "text": "I dreaded the thought of the next working day.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PR-E3", "text": "I had to push myself hard to do my work at all.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PR-E4", "text": "I finished work with energy still left for my own life.", "reverse": true, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "cynicism",
+          "label": "Distance and cynicism",
+          "note": "The purest professional-burnout signal. Cynicism is not caused by tiredness — an exhausted person who still cares is not burnt out in this sense. Weight this facet highly.",
+          "items": [
+            {"id": "PR-C1", "text": "I felt detached from my work — just going through the motions.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PR-C2", "text": "I stopped caring about the outcome of what I was doing.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PR-C3", "text": "I felt cynical about whether any of it matters.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PR-C4", "text": "I felt genuinely engaged with my work.", "reverse": true, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "efficacy",
+          "label": "Effectiveness (mostly reverse-scored)",
+          "items": [
+            {"id": "PR-F1", "text": "I felt effective at my work.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PR-F2", "text": "I felt confident in my ability to do my job.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PR-F3", "text": "I felt useless or ineffective at work.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PR-F4", "text": "I accomplished something worthwhile.", "reverse": true, "anchor": false, "daily_eligible": false,
+             "contamination_note": "DEMOTED. Measures OUTPUT, not the sense of efficacy. A person can accomplish nothing on a quiet day and feel perfectly capable. Anchor-only."},
+            {"id": "PR-F5", "text": "I doubted my ability to handle what work threw at me today.", "reverse": false, "anchor": false, "daily_eligible": true,
+             "note": "ADDED to restore this facet to 4 daily-eligible items after PR-F4 was demoted. Measures self-doubt about competence under pressure — distinct from PR-F3's 'felt useless', and passes the state test since it's a judgment about capability, not an output."}
+          ]
+        }
+      ]
+    },
+
+    {
+      "key": "personal",
+      "label": "Personal",
+      "definition": "The state of one's life outside obligations: autonomy, meaning, identity. NOT a count of hobbies performed.",
+      "cascade_role": "USUALLY DOWNSTREAM of professional and physical. A person with no time for hobbies because of a busy work week is not necessarily in personal burnout — the signal is the FELT loss of self, not the missed activity.",
+      "facets": [
+        {
+          "key": "meaning",
+          "label": "Meaning and identity",
+          "note": "Promoted to lead facet — the purest personal-state signal, and the one least contaminated by tiredness.",
+          "items": [
+            {"id": "PE-M1", "text": "I felt like I was just getting through the days, not living them.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PE-M2", "text": "What I did today felt meaningful to me.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PE-M3", "text": "I felt disconnected from the person I want to be.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PE-M4", "text": "I wondered what the point of it all is.", "reverse": false, "anchor": false, "daily_eligible": true}
+          ]
+        },
+        {
+          "key": "autonomy",
+          "label": "Ownership of your own time",
+          "items": [
+            {"id": "PE-A1", "text": "My life felt like it belonged to other people's demands.", "reverse": false, "anchor": true, "daily_eligible": true,
+             "contamination_note": "REWRITTEN from 'I had no time that was genuinely my own' — which is just a busy day. The FEELING of not owning your life is the signal."},
+            {"id": "PE-A2", "text": "I felt guilty when I tried to rest.", "reverse": false, "anchor": true, "daily_eligible": true},
+            {"id": "PE-A3", "text": "I had some say over how my day went.", "reverse": true, "anchor": false, "daily_eligible": true},
+            {"id": "PE-A4", "text": "I did something today purely because I wanted to.", "reverse": true, "anchor": true, "daily_eligible": false,
+             "contamination_note": "DEMOTED. Behaviour, not state. A tired person does nothing for pleasure; that does not mean their personal life has collapsed. Anchor-only."},
+            {"id": "PE-A5", "text": "I felt trapped by my own schedule today.", "reverse": false, "anchor": false, "daily_eligible": true,
+             "note": "ADDED to restore this facet to 4 daily-eligible items after PE-A4 was demoted. Names the FEELING of being boxed in by one's calendar — a state, not an action — distinct from PE-A1's broader 'life belongs to others' framing."}
+          ]
+        },
+        {
+          "key": "vitality",
+          "label": "Interest and engagement",
+          "items": [
+            {"id": "PE-V1", "text": "I had no interest in things I usually enjoy.", "reverse": false, "anchor": true, "daily_eligible": true,
+             "note": "This is anhedonia — loss of the CAPACITY for interest — not simply lack of time. Distinct from being busy."},
+            {"id": "PE-V2", "text": "I felt curious or interested in something.", "reverse": true, "anchor": true, "daily_eligible": true},
+            {"id": "PE-V3", "text": "Even the things I love felt like a chore.", "reverse": false, "anchor": false, "daily_eligible": true},
+            {"id": "PE-V4", "text": "I spent time on something I care about outside of work.", "reverse": true, "anchor": true, "daily_eligible": false,
+             "contamination_note": "DEMOTED. Behaviour. Whether you had TIME for a hobby is not whether you have LOST the hobby. Anchor-only."},
+            {"id": "PE-V5", "text": "I felt disconnected from the things that usually make me feel like myself.", "reverse": false, "anchor": false, "daily_eligible": true,
+             "note": "ADDED to restore this facet to 4 daily-eligible items after PE-V4 was demoted. Ties to identity/self-connection rather than interest-in-activities specifically, keeping it distinct from PE-V1."}
+          ]
+        }
+      ]
+    }
+  ]
+}
