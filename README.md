@@ -33,3 +33,16 @@ and turns it into a simple weather forecast: Clear, Overcast or Stormy.
 
 ## Built with
 Kotlin, Jetpack Compose, Room, SQLCipher, LiteRT-LM.
+
+## Research behind the product
+
+Before writing any Android code I tested the riskiest ideas in Python. These
+experiments are called spikes: short, throwaway experiments that answer one
+question before you commit to building. They live in [`research/`](research/):
+
+- [Model selection](research/spikes/MODEL_SELECTION.md): how I compared candidate
+  on-device models and why I chose Phi-4-mini
+- [Spike scripts](research/spikes/): can a small local model tag a journal entry
+  reliably?
+- [Scoring reference](research/scoring-reference/): the scoring engine,
+  prototyped and tested in Python before the Android version
